@@ -98,6 +98,19 @@ class LogitHandler(logging.Handler):
         self._sock.sendto(data, self._dest)
 
 
+class FileHandler(logging.Handler):
+    """This class is a logging handler. It saves the output to a file"""
+
+    def __init__(self):
+        """Constructor"""
+        logging.Handler.__init__(self)
+
+    def emit(self, record):
+        """Format the data and save it to a file"""
+        with open("output.txt", "w+") as file:
+            file.write(self.format(record))
+
+
 class DummyHandler(logging.Handler):
     """This class is a logger handler. It doesn't do anything"""
 
@@ -124,6 +137,8 @@ def create_logger(name="dummy", level=logging.DEBUG, record_format=None):
         log_handler = ConsoleHandler()
     elif name == "dummy":
         log_handler = DummyHandler()
+    elif name == "file":
+        log_handler = FileHandler()
     else:
         raise Exception("Unknown handler %s" % name)
     log_handler.setFormatter(formatter)

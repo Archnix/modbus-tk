@@ -108,7 +108,7 @@ class FileHandler(logging.Handler):
     def emit(self, record):
         """Format the data and save it to a file"""
         with open("output.txt", "a+") as file:
-            file.write(self.format(record))
+            file.write(self.format(record) + "\r\n")
 
 
 class DummyHandler(logging.Handler):
